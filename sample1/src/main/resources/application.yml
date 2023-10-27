@@ -1,0 +1,126 @@
+server:
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keys/simpledemo.p12
+    key-store-password: simpledemo.sp
+    key-alias: simpledemo
+    enabled: false
+  port: 8443
+  originhttp:
+    port: 8080
+
+spring:
+  application:
+    name: sample1
+  profiles:
+    active: dev
+#  Below config will make 404 page show as a restful json response.
+#  But the side effects is that the static resource will not able to display, so disable this
+#  web:
+#    resources:
+#      add-mappings: false
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10GB #单个文件的大小 The maximum allowed size of a single uploaded file. i.e. 1MB Priority 2, This config also works for limit the upload Maximum size.
+      max-request-size: 100GB #设置单次请求的文件的总大小 The maximum allowed size of a complete request. i.e. 100KB Priority 1, Limit the multipart/form-data file upload Maximum size.
+
+  datasource:
+    fst:
+      url: jdbc:h2:mem:ecommercedb;MODE=MYSQL
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+      initialization-mode: embedded
+      hikari:
+        connectionTimeout: 30000
+        idleTimeout: 600000
+        maxLifetime: 1800000
+    snd:
+      url: jdbc:h2:mem:snd;MODE=MYSQL
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+      initialization-mode: embedded
+
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+      settings:
+        web-allow-others: true
+      trace: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:/ehcache.xml
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: ps.demo.entity
+
+springdoc:
+  api-docs.enabled: false
+  swagger-ui:
+    enabled: false
+
+---
+
+spring:
+  profiles: dev
+#  datasource:
+#    url: jdbc:h2:mem:ecommercedb
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#    initialization-mode: embedded
+  sql:
+    init:
+      encoding: utf-8
+      schema-locations: classpath:schema_h2.sql
+      data-locations: classpath:data_h2.sql
+      mode: always
+
+  h2:
+    console:
+      path: /h2-console
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # Hibernate ddl auto (create, create-drop, validate, update)
+
+#  jackson:
+#    time-zone: GMT+8
+#    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+#
+#mybatis-plus:
+#  mapper-locations: classpath*:/mapper/**/*.xml
+#  type-aliases-package: ps.demo.entity
+
+springdoc:
+  packagesToScan: ps.demo
+  writer-with-default-pretty-printer: true
+  api-docs.enabled: true
+  api-docs.path: /springdoc/api-docs
+  resolve-schema-properties: true
+  swagger-ui:
+    enabled: true
+    path: /springdoc/index.html
+    url: /springdoc/api-docs
+    displayRequestDuration: true
+    showExtensions: true
+    showCommonExtensions: true
+    disable-swagger-default-url: true
+    operationsSorter: method
+swagger:
+  application-name: ${spring.application.name}
+  application-version: 1.0.0
+  application-description: Openapi Springdoc
+  try-host: http://localhost:8080
+
+

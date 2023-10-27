@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>simple index</title>
+</head>
+<body>
+<h3>--Simple Index--</h3>
+<a href="/springdoc/index.html">springdoc index (swagger)</a> |
+<a href="/springdoc/api-docs">api-docs</a> |
+<a href="/springdoc/api-docs.yaml">api-docs.yaml</a>
+| <a href="/h2-console">h2-console</a>
+<pre>
+  Frs Data Source:
+    Driver Class: org.h2.Driver
+    JDBC URL: jdbc:h2:mem:ecommercedb
+    User Name: sa
+    Password:
+  Snd Data Source:
+    Driver Class: org.h2.Driver
+    JDBC URL: jdbc:h2:mem:snd;MODE=MYSQL
+    User Name: sa
+    Password:
+</pre>
+| <a href="/springdoc/swagger-ui/index.html#/mocker-controller/save">create-mock</a>
+<pre>
+#Mock usage:
+1): http://localhost:8080/mock/create-mock to create mock.
+2): http://localhost:8080/mock/api/{YourMockUri} to use the created mock.
+On the "create-mock" phase, the headers and body content will be parsed by thymeleaf engine.
+and the "request" variable will be passed to the script context. So basically you can put the
+content as below: {"requestMethod": "[(${request.method})]", "randomStr": "[(${#strings.randomAlphanumeric(8)})]"}
+Example to create mock:
+curl -X 'POST' \
+'http://localhost:8080/mock/create-mock' \
+-H 'accept: application/json' \
+-H 'Content-Type: application/json' \
+-d '{
+"uri": "myrest-api",
+"regexMatch": true,
+"method": "get",
+"status": 200,
+"headers": "{\"myresponse-header-str\": \"[(${#strings.randomAlphanumeric(8)})]\"}",
+"body": "{\"requestMethod\": \"[(${request.method})]-[(${env.TMP})]\", \"randomStr\": \"[(${#strings.randomAlphanumeric(8)})]-[(${#strings.arrayJoin(#numbers.sequence(1, 5), '\'','\'')})]\"}"
+}'
+
+And to use the mock:
+curl --location --request GET 'http://localhost:8080/mock/api/myrest-api'
+</pre>
+</body>
+</html>
