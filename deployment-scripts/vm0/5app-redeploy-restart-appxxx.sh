@@ -47,7 +47,7 @@ PID=`ps -eaf | grep $APP_FILE_NAME | grep -v grep | awk '{print $2}'`
 echo "Started PID=$PID"
 EOF
 
-gcloud compute scp --zone $ZONE --internal-ip "5app-redeploy-restart-appxxx-sub.sh" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
-gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd /home/$LOGINUSER && chmod 777 5app-redeploy-restart-appxxx-sub.sh && sudo ./5app-redeploy-restart-appxxx-sub.sh"
+gcloud compute scp --zone $ZONE --internal-ip "5app-redeploy-restart-appxxx-sub.sh" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
+gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd $REMOTE_FOLDER && chmod 777 5app-redeploy-restart-appxxx-sub.sh && sudo ./5app-redeploy-restart-appxxx-sub.sh"
 rm 5app-redeploy-restart-appxxx-sub.sh
 echo "Remote appxxx redeployed"

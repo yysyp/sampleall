@@ -53,7 +53,7 @@ fi
 
 EOF
 
-gcloud compute scp --zone $ZONE --internal-ip "4remote-software-install-docker-jdk-mysqlindocker-sub.sh" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
-gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd /home/$LOGINUSER && chmod 777 4remote-software-install-docker-jdk-mysqlindocker-sub.sh && sudo ./4remote-software-install-docker-jdk-mysqlindocker-sub.sh $USERNAME $PASSWD"
+gcloud compute scp --zone $ZONE --internal-ip "4remote-software-install-docker-jdk-mysqlindocker-sub.sh" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
+gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd $REMOTE_FOLDER && chmod 777 4remote-software-install-docker-jdk-mysqlindocker-sub.sh && sudo ./4remote-software-install-docker-jdk-mysqlindocker-sub.sh $USERNAME $PASSWD"
 rm 4remote-software-install-docker-jdk-mysqlindocker-sub.sh
 echo "Remote software installed"

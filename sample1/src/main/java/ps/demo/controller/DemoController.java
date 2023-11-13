@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ps.demo.common.MyBaseResponse;
 import ps.demo.common.MyBaseController;
-import ps.demo.common.StringDataResponseMy;
+import ps.demo.common.MyStringDataResponse;
 import ps.demo.entity.Product;
 import ps.demo.service.AsyncService;
 import ps.demo.service.CacheService;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionService;
-import java.util.concurrent.Future;
 
 @Slf4j
 @RestController
@@ -31,7 +29,7 @@ public class DemoController extends MyBaseController {
     @GetMapping("/cache")
     public MyBaseResponse findProduct(@RequestParam(name = "productId") Long productId) {
         Product product = cacheService.findProductById(productId);
-        return StringDataResponseMy.successWithData(product);
+        return MyStringDataResponse.successWithData(product);
     }
 
     @Operation(summary = "Cache demo delete")
@@ -56,10 +54,10 @@ public class DemoController extends MyBaseController {
         if (wait) {
             CompletableFuture.allOf(task1, task2, task3, task4).join();
             String result = task1.get();
-            return StringDataResponseMy.successWithData(result);
+            return MyStringDataResponse.successWithData(result);
         }
         // str.get();
-        return StringDataResponseMy.successWithData("You don't wait.");
+        return MyStringDataResponse.successWithData("You don't wait.");
     }
 
 }

@@ -16,7 +16,7 @@ a simple e-commerce scenarios including:
 2. Run command to go to "target" folder: ```cd target```
 3. start up application: ```java -jar sample1-1.0.0.jar```
 4. Application started when you see "ps.demo.WebServerApplication - Started WebServerApplication" message.
-5. Open your browser and navigate to the swagger doc page: http://localhost:8080/springdoc/index.html
+5. Open your browser and navigate to the swagger doc page: http://localhost:8880/springdoc/index.html
 6. On the swagger doc page, for each API you can click "Try it out" to call the API.
 7. The seed data has been initiated in H2 database, so you can use below parameters: 
 - userId: 1 to 3
@@ -24,14 +24,14 @@ a simple e-commerce scenarios including:
 - productId: 1 to 17
 
 ### Other URLs for reference: 
-- Home index page: http://localhost:8080/
-- API swagger doc: http://localhost:8080/springdoc/index.html
-- OpenAPI in JSON format: http://localhost:8080/springdoc/api-docs
-- OpenAPI in YAML format: http://localhost:8080/springdoc/api-docs.yaml
-- H2 database console: http://localhost:8080/h2-console
+- Home index page: http://localhost:8880/
+- API swagger doc: http://localhost:8880/springdoc/index.html
+- OpenAPI in JSON format: http://localhost:8880/springdoc/api-docs
+- OpenAPI in YAML format: http://localhost:8880/springdoc/api-docs.yaml
+- H2 database console: http://localhost:8880/h2-console
 
 ### This application is based on memory H2 database, follow below steps to login to H2 database:
-1. In browser open URL: http://localhost:8080/h2-console
+1. In browser open URL: http://localhost:8880/h2-console
 2. Saved Settings set to: Generic H2 (Embedded)
 3. Driver Class set to: org.h2.Driver
 4. JDBC URL set to: jdbc:h2:mem:ecommercedb
@@ -48,20 +48,20 @@ a simple e-commerce scenarios including:
 
 ### Start with docker:
 - docker build -t app:v1 -f Dockerfile .
-- docker run --name app --rm -itd -p 8080:8080 app:v1
+- docker run --name app --rm -itd -p 8880:8880 app:v1
 - Docker build from upper folder: docker build -t app:v1 -f script/Dockerfile .
 - Docker stop container: docker stop app
 - Remove unused images (careful it will remove base image, like jdk): docker image prune -a 
 ###
 #Mock usage:
-1): http://localhost:8080/mock/create-mock to create mock.
-2): http://localhost:8080/mock/api/{YourMockUri} to use the created mock.
+1): http://localhost:8880/mock/create-mock to create mock.
+2): http://localhost:8880/mock/api/{YourMockUri} to use the created mock.
 On the "create-mock" phase, the headers and body content will be parsed by thymeleaf engine.
 and the "request" variable will be passed to the script context. So basically you can put the
 content as below: {"requestMethod": "[(${request.method})]", "randomStr": "[(${#strings.randomAlphanumeric(8)})]"}
 Example to create mock:
 curl -X 'POST' \
-'http://localhost:8080/mock/create-mock' \
+'http://localhost:8880/mock/create-mock' \
 -H 'accept: application/json' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -74,4 +74,4 @@ curl -X 'POST' \
 }'
 
 And to use the mock:
-curl --location --request GET 'http://localhost:8080/mock/api/myrest-api'
+curl --location --request GET 'http://localhost:8880/mock/api/myrest-api'

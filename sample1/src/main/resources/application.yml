@@ -5,9 +5,9 @@ server:
     key-store-password: simpledemo.sp
     key-alias: simpledemo
     enabled: false
-  port: 8443
+  port: 8843
   originhttp:
-    port: 8080
+    port: 8880
 
 spring:
   application:
@@ -121,6 +121,6 @@ swagger:
   application-name: ${spring.application.name}
   application-version: 1.0.0
   application-description: Openapi Springdoc
-  try-host: http://localhost:8080
+  try-host: http://localhost:8880
 
 

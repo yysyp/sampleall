@@ -4,15 +4,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ps.demo.common.MyBaseController;
 import ps.demo.common.MyBaseResponse;
 import ps.demo.common.MyRestTemplateUtil;
-import ps.demo.common.StringDataResponseMy;
+import ps.demo.common.MyStringDataResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -37,12 +33,12 @@ public class AbnormalGetWithRequestEndpointController extends MyBaseController {
 //                , "What every this is the Request Body for GET"
 //                , pType
 //                , ImmutableMap.of("userId", "xiaolong", "age", 12));
-//        return StringDataResponseMy.successWithData(responseEntity.getBody());
+//        return MyStringDataResponse.successWithData(responseEntity.getBody());
 
         String reqBody = new Gson().toJson(ImmutableMap.of("method", "get", "requestBody", "hea你好~"));
         String responseBody = MyRestTemplateUtil.getWithRequestBody("http://localhost:8080/abnml/getwithreq2?user=userId&age=14"
         , reqBody, "UTF-8");
-        return StringDataResponseMy.successWithData(responseBody);
+        return MyStringDataResponse.successWithData(responseBody);
     }
 
     @Operation(summary = "Abnormal endpoint GET with requestBody for testing2")
@@ -50,7 +46,7 @@ public class AbnormalGetWithRequestEndpointController extends MyBaseController {
     public MyBaseResponse getwithreq2(@RequestBody Map requestBody, HttpServletRequest request) {
         log.info("getwithreq2 requestBody={}, requestParameters={}", requestBody, request.getParameterMap());
 
-        return StringDataResponseMy.successWithData(ImmutableMap.of("requestBody", requestBody, "parameterMap", request.getParameterMap()));
+        return MyStringDataResponse.successWithData(ImmutableMap.of("requestBody", requestBody, "parameterMap", request.getParameterMap()));
     }
 
 

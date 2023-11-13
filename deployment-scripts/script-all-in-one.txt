@@ -11,7 +11,7 @@ PROJECT_ID=xxx
 ZONE=xxx
 VM_NAME=my-vm-001
 SA_ACCOUNT=auto_deploy@xxx.com
-#DEPLOY_FOLDER=deploy_folder
+#LOCAL_FOLDER=LOCAL_FOLDER
 LOGINUSER=ubuntu
 USERNAME=nexus1
 PASSWD=pass1
@@ -46,9 +46,9 @@ set -o nounset
 set -o errexit
 source 0env-set.sh
 
-#rm -rf $DEPLOY_FOLDER/aa/
-#git clone --branch main --single-branch https://xxx/aa.git $DEPLOY_FOLDER/aa
-#echo "Git cloned to $DEPLOY_FOLDER for uploading"
+#rm -rf $LOCAL_FOLDER/aa/
+#git clone --branch main --single-branch https://xxx/aa.git $LOCAL_FOLDER/aa
+#echo "Git cloned to $LOCAL_FOLDER for uploading"
 
 rm -rf ./appxxx/
 git clone --branch main --single-branch https://xxx/aa.git appxxx
@@ -65,12 +65,12 @@ set -o nounset
 set -o errexit
 source 0env-set.sh
 
-#gcloud compute scp --zone $ZONE --internal-ip --recurse "$DEPLOY_FOLDER" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
-#gcloud compute scp --zone $ZONE --internal-ip "/c/tmp/abc.json" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/$DEPLOY_FOLDER/
-#echo "Folder $DEPLOY_FOLDER uploaded to remote VM"
+#gcloud compute scp --zone $ZONE --internal-ip --recurse "$LOCAL_FOLDER" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
+#gcloud compute scp --zone $ZONE --internal-ip "/c/tmp/abc.json" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/$DEPLOY_FOLDER/
+#echo "Folder $LOCAL_FOLDER uploaded to remote VM"
 
-gcloud compute scp --zone $ZONE --internal-ip --recurse "source-folder" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
-gcloud compute scp --zone $ZONE --internal-ip "/c/tmp/abc.json" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
+gcloud compute scp --zone $ZONE --internal-ip --recurse "source-folder" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
+gcloud compute scp --zone $ZONE --internal-ip "/c/tmp/abc.json" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
 echo "Folder source-folder uploaded to remote VM"
 
 
@@ -134,8 +134,8 @@ fi
 
 EOF
 
-gcloud compute scp --zone $ZONE --internal-ip "4remote-software-install-docker-jdk-mysqlindocker-sub.sh" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
-gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd /home/$LOGINUSER && chmod 777 4remote-software-install-docker-jdk-mysqlindocker-sub.sh && sudo ./4remote-software-install-docker-jdk-mysqlindocker-sub.sh $USERNAME $PASSWD"
+gcloud compute scp --zone $ZONE --internal-ip "4remote-software-install-docker-jdk-mysqlindocker-sub.sh" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
+gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd $REMOTE_FOLDER && chmod 777 4remote-software-install-docker-jdk-mysqlindocker-sub.sh && sudo ./4remote-software-install-docker-jdk-mysqlindocker-sub.sh $USERNAME $PASSWD"
 rm 4remote-software-install-docker-jdk-mysqlindocker-sub.sh
 echo "Remote software installed"
 
@@ -196,8 +196,8 @@ PID=`ps -eaf | grep $APP_FILE_NAME | grep -v grep | awk '{print $2}'`
 echo "Started PID=$PID"
 EOF
 
-gcloud compute scp --zone $ZONE --internal-ip "5app-redeploy-restart-appxxx-sub.sh" $LOGINUSER@$VM_NAME:/home/$LOGINUSER/
-gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd /home/$LOGINUSER && chmod 777 5app-redeploy-restart-appxxx-sub.sh && sudo ./5app-redeploy-restart-appxxx-sub.sh"
+gcloud compute scp --zone $ZONE --internal-ip "5app-redeploy-restart-appxxx-sub.sh" $LOGINUSER@$VM_NAME:$REMOTE_FOLDER/
+gcloud compute ssh $VM_NAME --zone $ZONE --internal-ip --command "cd $REMOTE_FOLDER && chmod 777 5app-redeploy-restart-appxxx-sub.sh && sudo ./5app-redeploy-restart-appxxx-sub.sh"
 rm 5app-redeploy-restart-appxxx-sub.sh
 echo "Remote appxxx redeployed"
 
