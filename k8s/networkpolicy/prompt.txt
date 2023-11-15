@@ -8,3 +8,26 @@
 
 kubectl -n appns logs -f simple-demo-web-86b687b979-qbrtc
 kubectl -n appns -it exec simple-demo-web-86b687b979-qbrtc -- bash
+
+
+{"code":"500","message":"Server error","detail":"org.springframework.web.client.ResourceAccessException: I/O error on GET request for \"http://bing.com:8880/\": Connect to bing.com:8880 [bing.com/13.107.21.200, bing.com/204.79.197.200] failed: Connection refused (Connection refused); nested exception is org.apache.http.conn.HttpHostConnectException: Connect to bing.com:8880 [bing.com/13.107.21.200, bing.com/204.79.197.200] failed: Connection refused (Connection refused)","trace":null,"correlationId":null,"instance":null,"timestamp":"2023-11-15T07:53:00.362","path":null}
+
+在Kubernetes集群中启用Network Policy，需要遵循以下步骤：
+
+确认你的网络组件（CNI）必须支持网络策略，比如Flannel就不支持网络策略，而Calico是支持网络策略的。
+创建一个 NetworkPolicy 资源对象。可以按照需要创建自定义的网络策略规则，例如，禁止某个命名空间访问另一个命名空间等。
+部署Calico网络插件。这可以保证节点之间能够正常通信，并实现网络流量进出pod的规则。
+设置网络策略的默认允许列表。这可以确保未明确拒绝的流量都是允许通过的。
+以上信息仅供参考，请咨询专业的技术人士以获得最准确的信息。
+
+curl https://docs.projectcalico.org/manifests/calico.yaml -O
+
+#https://github.com/projectcalico/calico/issues/8102
+#https://github.com/docker/for-mac/issues/4626
+
+#local kubernetes single node windows docker-desktop kubernetes not working:
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+#minikube works
+minikube start --kubernetes-version="v1.16.5" --vm-driver=hyperkit --network-plugin=cni --extra-config=kubelet.network-plugin=cni
+

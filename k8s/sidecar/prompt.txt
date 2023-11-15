@@ -1,0 +1,7 @@
+请帮我写一个k8s 部署的yaml. 包含如下内容：
+1）一个简单的pod，启动一个web应用，同时有个sidecar的nginx控制这个web应用的所有网络访问，包括入和出.
+
+Please help to write k8s yaml, which should meet:
+1, deploy a simple web app in pod and there should be a side-car nginx in charge of all the network in and out for the simple web app
+
+

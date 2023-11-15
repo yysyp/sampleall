@@ -1,0 +1,11 @@
+as a senior developer, please guide me step by step to install istio for windows docker-desktop kubernetes version 1.21
+
+#this curl not working so use github.com url to manually download.
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.12.0 TARGET_ARCH=x86_64 sh -
+
+https://github.com/istio/istio/releases/tag/1.12.0
+set system env for the istioctl
+istioctl install --set profile=demo
+kubectl label namespace default istio-injection=enabled
+kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+

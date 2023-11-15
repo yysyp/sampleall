@@ -74,4 +74,32 @@ spec:
   selector:
     app: simple-demo-web
 
+---
 
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: access-curl-pod
+spec:
+  podSelector:
+    matchLabels:
+      app: simple-demo-web
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: target-pod
+      ports:
+        - protocol: TCP
+          port: 8880
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.0.0.0/24
+      ports:
+        - protocol: TCP
+          port: 32000
+          endPort: 32768

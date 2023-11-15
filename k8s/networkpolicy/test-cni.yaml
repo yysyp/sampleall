@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-cni
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: default-deny
+  namespace: test-cni
+spec:
+  podSelector:
+    matchLabels:
+      task: no-network
+  policyTypes:
+    - Ingress
+    - Egress
+  egress: []
+  ingress: []
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-cni-pod
+  namespace: test-cni
+  labels:
+    task: no-network
+spec:
+  containers:
+    - name: test-cni-pod
+      image: busybox
+      command: ["wget", "www.bing.com"]
+  restartPolicy: Never
