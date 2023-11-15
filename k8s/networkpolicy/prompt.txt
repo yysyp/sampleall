@@ -5,4 +5,6 @@
 #限制只有具有app=target-pod标签的Pod才能访问curl-pod的8880端口。
 
 
-#kubectl -n appns logs -f simple-demo-web-8c7c477bf-8kwcq
+
+kubectl -n appns logs -f simple-demo-web-86b687b979-qbrtc
+kubectl -n appns -it exec simple-demo-web-86b687b979-qbrtc -- bash
