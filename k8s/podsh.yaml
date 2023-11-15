@@ -1,0 +1,25 @@
+#kubectl create ns testns
+#kubectl apply -f podsh.yaml --namespace=testns
+#kubectl get pod --namespace=testns
+#kubectl logs curl-pod --namespace=testns
+#kubectl -n testns -it exec curl-pod -- /bin/sh
+#docker run --rm curlimages/curl -i -o out.txt http://cn.bing.com
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl-pod
+spec:
+  containers:
+    - name: curl-container
+      image: curlimages/curl # 使用适合您的curl镜像
+      command: ["/bin/sh", "-c", "while true; do curl -i -o out.txt http://cn.bing.com; sleep 30; done"] # 将example.com更改为您要curl的URL，10秒是curl请求之间的间隔时间，可以根据需要进行调整
+      ports:
+        - containerPort: 80 # 如果需要访问特定的端口，请更改此值
+      livenessProbe:
+        httpGet:
+          path: / # 存活探针的路径，根据需要进行更改
+          port: 80 # 如果需要访问特定的端口，请更改此值
+        initialDelaySeconds: 15 # 存活探针初始延迟时间，根据需要进行更改
+        periodSeconds: 20 # 存活探针检查间隔时间，根据需要进行更改
+  restartPolicy: OnFailure

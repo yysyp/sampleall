@@ -1,0 +1,5 @@
+请帮忙写一个k8s 部署的yaml. 包含如下内容：
+1）一个简单的pod，定时不停的curl某个url, 这个pod需要有存活探针.
+2）给第一步创建的pod加上network policy, 不允许访问外网
+
+#限制只有具有app=target-pod标签的Pod才能访问curl-pod的8080端口。
