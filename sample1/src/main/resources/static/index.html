@@ -24,14 +24,14 @@
 | <a href="/springdoc/swagger-ui/index.html#/mocker-controller/save">create-mock</a>
 <pre>
 #Mock usage:
-1): http://localhost:8080/mock/create-mock to create mock.
-2): http://localhost:8080/mock/api/{YourMockUri} to use the created mock.
+1): http://localhost:8880/mock/create-mock to create mock.
+2): http://localhost:8880/mock/api/{YourMockUri} to use the created mock.
 On the "create-mock" phase, the headers and body content will be parsed by thymeleaf engine.
 and the "request" variable will be passed to the script context. So basically you can put the
 content as below: {"requestMethod": "[(${request.method})]", "randomStr": "[(${#strings.randomAlphanumeric(8)})]"}
 Example to create mock:
 curl -X 'POST' \
-'http://localhost:8080/mock/create-mock' \
+'http://localhost:8880/mock/create-mock' \
 -H 'accept: application/json' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -44,7 +44,7 @@ curl -X 'POST' \
 }'
 
 And to use the mock:
-curl --location --request GET 'http://localhost:8080/mock/api/myrest-api'
+curl --location --request GET 'http://localhost:8880/mock/api/myrest-api'
 </pre>
 </body>
 </html>

@@ -8,6 +8,7 @@ spec:
       app: curl-pod
   policyTypes:
     - Ingress
+    - Egress
   ingress:
     - from:
         - podSelector:
@@ -15,6 +16,14 @@ spec:
               app: target-pod
       ports:
         - protocol: TCP
-          port: 8080
+          port: 8880
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 10.0.0.0/24
+      ports:
+        - protocol: TCP
+          port: 32000
+          endPort: 32768
 
 #kubectl apply -f networkpolicy.yaml --namespace=testns

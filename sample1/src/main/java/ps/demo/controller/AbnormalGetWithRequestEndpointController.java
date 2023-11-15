@@ -28,7 +28,7 @@ public class AbnormalGetWithRequestEndpointController extends MyBaseController {
 //        ParameterizedTypeReference<String> pType = new ParameterizedTypeReference<String>() {
 //        };
 //        ResponseEntity<String> responseEntity = MyRestTemplateUtil.getInstance().getWithRequestBodyForObject(
-//                "http://localhost:8080/abnml/getwithreq2?user={userId}&age={age}"
+//                "http://localhost:8880/abnml/getwithreq2?user={userId}&age={age}"
 //                , headers
 //                , "What every this is the Request Body for GET"
 //                , pType
@@ -36,7 +36,7 @@ public class AbnormalGetWithRequestEndpointController extends MyBaseController {
 //        return MyStringDataResponse.successWithData(responseEntity.getBody());
 
         String reqBody = new Gson().toJson(ImmutableMap.of("method", "get", "requestBody", "hea你好~"));
-        String responseBody = MyRestTemplateUtil.getWithRequestBody("http://localhost:8080/abnml/getwithreq2?user=userId&age=14"
+        String responseBody = MyRestTemplateUtil.getWithRequestBody("http://localhost:8880/abnml/getwithreq2?user=userId&age=14"
         , reqBody, "UTF-8");
         return MyStringDataResponse.successWithData(responseBody);
     }

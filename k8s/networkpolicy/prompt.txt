@@ -2,4 +2,7 @@
 1）一个简单的pod，定时不停的curl某个url, 这个pod需要有存活探针.
 2）给第一步创建的pod加上network policy, 不允许访问外网
 
-#限制只有具有app=target-pod标签的Pod才能访问curl-pod的8080端口。
+#限制只有具有app=target-pod标签的Pod才能访问curl-pod的8880端口。
+
+
+#kubectl -n appns logs -f simple-demo-web-8c7c477bf-8kwcq

@@ -1,0 +1,19 @@
+===登录pod bash.
+#kubectl -n namespace1 -it exec podxxx -- bash
+#kubectl -it exec podxxx -- /bin/sh
+#kubectl -n app -it exec ngx-65f68876c8-ksc74  -c 1st -- /bin/sh
+
+===查看log.
+#kubectl -n namespace1 logs --since=24h --selector app=app1
+#
+for i in $(kubectl -n "namespace1" get pods --selector app=app1 | sed 1d | cut -d" " -f1); do
+kubectl -n "namespace1" logs $i | grep -i "keywords"; done
+
+#kubectl -n namespace1 logs -f podxxx
+
+#kubectl -n ns1 logs -f $(kubectl -n ns1 get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep mydemoapp | head -1)
+#kubectl -n app logs -f $(kubectl -n app get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | sed -n '1p')
+#kubectl -n app logs -f $(kubectl -n app get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | sed -n '2p')
+#kubectl -n app logs -f $(kubectl -n app get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | sed -n '3p')
+
+kubectl -n app logs -f ngx-5d7556ffd-d7jwt -c 1st
