@@ -76,4 +76,20 @@ spec:
 
 ---
 
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: bing-com
+spec:
+  hosts:
+    - www.bing.com
+  ports:
+    - number: 80
+      name: http
+      protocol: HTTP
+    - number: 443
+      name: https
+      protocol: HTTP
+  resolution: DNS
+  location: MESH_EXTERNAL
 
