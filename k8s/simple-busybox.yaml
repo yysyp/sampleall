@@ -1,0 +1,21 @@
+#kubectl create namespace simple
+#kubectl apply -f simple-busybox.yaml --namespace=simple
+#kubectl delete -f simple-busybox.yaml
+#kubectl delete namespace simple
+#kubectl -n simple describe pod busybox-pod
+#kubectl -n simple get pod -w
+#kubectl -n simple logs busybox-pod
+#Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
+#kubectl -n simple exec -it busybox-pod -- bash
+#kubectl -n simple exec -it busybox-pod -- /bin/sh
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-pod
+spec:
+  containers:
+    - name: busybox-container
+      image: busybox:1.32
+      command: ['sh', '-c', 'while true; do echo "hello ~"; sleep 3; done']  # 容器启动时要执行的命令
+      ports:
+        - containerPort: 8080  # 容器内的端口号，可以根据需求调整

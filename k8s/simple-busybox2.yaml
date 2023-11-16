@@ -1,0 +1,33 @@
+#Need to use: image: registry.k8s.io/busybox to work properly, this doesn't work, not run cmd in args
+#kubectl create namespace simple
+#kubectl apply -f simple-busybox2.yaml --namespace=simple
+#kubectl delete -f simple-busybox2.yaml
+#kubectl delete namespace simple
+#kubectl -n simple describe pod liveness-exec
+#kubectl -n simple get pod -w
+#kubectl -n simple logs liveness-exec
+#Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
+#kubectl -n simple exec -it liveness-exec -- bash
+#kubectl -n simple exec -it liveness-exec -- /bin/sh
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-exec
+spec:
+  containers:
+    - name: liveness
+      image: busybox:1.32
+      args:
+        - /bin/sh
+        - -c
+        - touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
+      livenessProbe:
+        exec:
+          command:
+            - cat
+            - /tmp/healthy
+        initialDelaySeconds: 5
+        periodSeconds: 5
+

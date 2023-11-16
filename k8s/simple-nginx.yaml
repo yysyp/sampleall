@@ -1,0 +1,74 @@
+#请帮我提供k8s yaml, 实现如下要求：1. 用nginx构建一个简单的web应用，2. 用configmap 提供nginx 所需文件以及简单的html首页，3. 要求pod有探针, 4. 所有内容在一个yaml文件中
+#kubectl create namespace simple
+#kubectl apply -f simple-nginx.yaml --namespace=simple
+#kubectl apply -f simple-nginx.yaml -n simple
+#nginx:1.23.4-alpine
+#kubectl -n simple describe pod my-nginx
+#kubectl -n simple exec -it my-nginx -- bash
+#kubectl -n simple exec -it my-nginx -- /bin/sh
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-nginx-config
+data:
+  nginx.conf: |-
+    worker_processes 1;
+    events { worker_connections 1024; }
+    http {
+      default_type application/octet-stream;
+      log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+        '$status $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" "$http_x_forwarded_for"';
+      access_log /var/log/nginx/access.log main;
+      error_log /var/log/nginx/error.log;
+      server {
+        listen 80;
+        server_name localhost;
+        root /usr/share/nginx/html;
+        index index.html;
+        location / {
+          try_files $uri $uri/ =404;
+        }
+      }
+    }
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx
+spec:
+  containers:
+    - name: my-nginx-container
+      image: nginx:1.23.4-alpine
+      volumeMounts:
+        - name: my-nginx-config
+          mountPath: /etc/nginx
+      ports:
+        - containerPort: 80
+      readinessProbe:
+        httpGet:
+          port: 80
+          path: /
+        initialDelaySeconds: 15
+        periodSeconds: 20
+  volumes:
+    - name: my-nginx-config
+      configMap:
+        name: my-nginx-config
+  restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 30082
+  type: NodePort
+
