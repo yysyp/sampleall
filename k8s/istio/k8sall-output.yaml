@@ -23,7 +23,7 @@ spec:
         fsGroup: 9999
       containers:
         - name: simple-demo-web
-          image: app:v202311160932
+          image: app:v202311160952
           ports:
             - containerPort: 8880
           livenessProbe:
@@ -82,14 +82,15 @@ metadata:
   name: bing-com
 spec:
   hosts:
-    - www.bing.com
+    - "*.bing.com"
+    - www.baidu.com
   ports:
     - number: 80
       name: http
       protocol: HTTP
     - number: 443
       name: https
-      protocol: HTTP
+      protocol: TLS
   resolution: DNS
   location: MESH_EXTERNAL
 

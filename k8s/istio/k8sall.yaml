@@ -82,14 +82,16 @@ metadata:
   name: bing-com
 spec:
   hosts:
-    - www.bing.com
+    - "*.bing.com"
+    - www.baidu.com
   ports:
     - number: 80
       name: http
       protocol: HTTP
     - number: 443
       name: https
-      protocol: HTTP
-  resolution: DNS
+      protocol: TLS
+  #resolution: DNS
+  resolution: NONE
   location: MESH_EXTERNAL
 
