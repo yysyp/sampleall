@@ -11,6 +11,12 @@ Istio 默认自动注入 Sidecar. 请为 default 命名空间打上标签 istio-
 kubectl label namespace default istio-injection=enabled
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 
+#manul inject sidecar
+istioctl kube-inject -f k8sall-output.yaml | kubectl apply -f -
+
+#block any traffic to leave the service by default
+istioctl install --set profile=demo --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
+
 uninstall:
 istioctl manifest generate --set profile=demo | kubectl delete -f -
 
@@ -57,3 +63,8 @@ echo "INGRESS_HOST=$INGRESS_HOST, INGRESS_PORT=$INGRESS_PORT"
 
 http://127.0.0.1:30099/productpage
 https://192.168.65.4:30766/productpage
+
+https://icyfenix.cn/exploration/projects/servicemesh_arch_istio.html
+https://github.com/fenixsoft/servicemesh_arch_istio
+
+
