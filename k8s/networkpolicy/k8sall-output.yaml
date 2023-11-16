@@ -23,7 +23,7 @@ spec:
         fsGroup: 9999
       containers:
         - name: simple-demo-web
-          image: app:v202311160852
+          image: app:v202311160915
           ports:
             - containerPort: 8880
           livenessProbe:
@@ -69,7 +69,7 @@ spec:
   ports:
     - port: 8880 # between containers for service call for K8s
       targetPort: 8880 # container port
-      nodePort: 30080 # by default 30000-32767 for external call
+      nodePort: 30081 # by default 30000-32767 for external call
   type: NodePort
   selector:
     app: simple-demo-web

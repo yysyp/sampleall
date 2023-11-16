@@ -3,6 +3,8 @@
 set -o nounset
 #set -o errexit
 
+#istioctl install --set profile=demo --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
+
 echo '-----------------Initializing...-----------------'
 DateTimeVer=$(date +"%Y%m%d%H%M")
 curDir=$PWD
