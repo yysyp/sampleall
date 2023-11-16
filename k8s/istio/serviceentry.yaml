@@ -6,6 +6,8 @@ spec:
   hosts:
     - "*.bing.com"
     - www.baidu.com
+  exportTo:
+    - "."
   ports:
     - number: 80
       name: http
@@ -14,7 +16,7 @@ spec:
       name: https
       protocol: TLS
   #resolution: DNS
-  resolution: NONE
+  #resolution: NONE
   location: MESH_EXTERNAL
 
 #kubectl apply -f serviceentry.yaml --namespace appistio
