@@ -1,0 +1,79 @@
+#kubectl apply -f appNamePlaceHolderyaml.output
+#kubectl delete -f appNamePlaceHolderyaml.output
+#kubectl delete ns namespacePlaceHolder
+#kubectl create namespace namespacePlaceHolder
+#kubectl apply -f appNamePlaceHolderyaml.output --namespace=namespacePlaceHolder
+#kubectl delete -f appNamePlaceHolderyaml.output
+#kubectl delete namespace namespacePlaceHolder
+#kubectl -n namespacePlaceHolder describe pod appNamePlaceHolder
+#kubectl -n namespacePlaceHolder get pod -w
+#kubectl -n namespacePlaceHolder logs appNamePlaceHolder
+#Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
+#kubectl -n namespacePlaceHolder exec -it appNamePlaceHolder -- bash
+#kubectl -n namespacePlaceHolder exec -it appNamePlaceHolder -- /bin/sh
+#kubectl -n namespacePlaceHolder exec -it $(kubectl -n namespacePlaceHolder get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep appNamePlaceHolder | head -1) -- /bin/sh
+#kubectl -n namespacePlaceHolder port-forward appNamePlaceHolder 30080:80
+#kubectl explain pod --recursive | grep -i maxRetries
+#kubectl -n namespacePlaceHolder logs -f $(kubectl -n namespacePlaceHolder get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep appNamePlaceHolder | head -1)
+#kubectl get netpol -n namespacePlaceHolder
+#kubectl -n namespacePlaceHolder delete networkpolicy appNamePlaceHolder-np
+#kubectl explain pod --recursive | grep -i maxRetries
+#kubectl explain networkpolicy --recursive
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: namespacePlaceHolder
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appNamePlaceHolder
+  namespace: namespacePlaceHolder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appNamePlaceHolder
+  template:
+    metadata:
+      labels:
+        app: appNamePlaceHolder
+    spec:
+      containers:
+        - name: appNamePlaceHolder
+          image: imageNamePlaceHolder:versionPlaceHolder
+          command: ["/bin/sh"]
+          args: ["-c", "touch /tmp/healthy; while true; do echo $(date +'%Y%m%d%H%M%S') >> /tmp/healthy; sleep 10; done"]
+          #ports:
+          #  - containerPort: containerPortPlaceHolder
+          #readinessProbe:
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /tmp/healthy
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
+---
+
+#Not to create this service you can use this port-forward command instead.
+#kubectl -n namespacePlaceHolder port-forward $(kubectl -n namespacePlaceHolder get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep appNamePlaceHolder | head -1) nodePortPlaceHolder:containerPortPlaceHolder
+apiVersion: v1
+kind: Service
+metadata:
+  name: appNamePlaceHolder-service
+  namespace: namespacePlaceHolder
+  labels:
+    app: appNamePlaceHolder-service
+spec:
+  ports:
+    - port: containerPortPlaceHolder # between containers for service call for K8s
+      targetPort: containerPortPlaceHolder # container port
+      nodePort: nodePortPlaceHolder # by default >30000 for external call
+  type: NodePort
+  selector:
+    app: appNamePlaceHolder
