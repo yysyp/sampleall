@@ -11,6 +11,7 @@
 #kubectl -n simple exec -it python-webapp -- bash
 #kubectl -n simple exec -it python-webapp -- /bin/sh
 #kubectl -n simple port-forward python-webapp 30085:80
+#kubectl explain pod --recursive | grep -i maxRetries
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -52,10 +53,20 @@ spec:
           port: 80
         initialDelaySeconds: 5
         periodSeconds: 5
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 300m
+          memory: 300Mi
   volumes:
     - name: python-files
       configMap:
         name: python-files
+  #restartPolicy: Always
+  #restartPolicy: OnFailure
+  restartPolicy: Never
 
 ---
 #Not to create this service you can use this port-forward command instead.

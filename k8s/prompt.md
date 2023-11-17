@@ -12,3 +12,5 @@
 - Slim 镜像
 如果实在不想折腾，可以选择一个折衷的镜像 xxx:slim。slim 镜像一般都基于 Debian 和 glibc，删除了许多非必需的软件包，优化了体积。如果构建过程中需要编译器，那么 slim 镜像不适合，除此之外大多数情况下还是可以使用 slim 作为基础镜像的。
 
+--
+kubectl get secret regcred --output=yaml

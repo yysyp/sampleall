@@ -6,6 +6,7 @@
 #kubectl -n simple exec -it my-nginx -- bash
 #kubectl -n simple exec -it my-nginx -- /bin/sh
 #kubectl -n simple port-forward my-nginx 30082:80
+#kubectl explain pod --recursive | grep -i maxRetries
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -54,6 +55,14 @@ spec:
           path: /
         initialDelaySeconds: 15
         periodSeconds: 20
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 300m
+          memory: 300Mi
+
   volumes:
     - name: my-nginx-config
       configMap:

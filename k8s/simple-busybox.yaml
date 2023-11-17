@@ -8,6 +8,7 @@
 #Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
 #kubectl -n simple exec -it busybox-pod -- bash
 #kubectl -n simple exec -it busybox-pod -- /bin/sh
+#kubectl explain pod --recursive | grep -i maxRetries
 apiVersion: v1
 kind: Pod
 metadata:
@@ -19,3 +20,15 @@ spec:
       command: ['sh', '-c', 'while true; do echo "hello ~"; sleep 3; done']  # 容器启动时要执行的命令
       ports:
         - containerPort: 8080  # 容器内的端口号，可以根据需求调整
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 300m
+          memory: 300Mi
+  #restartPolicy: Always
+  #restartPolicy: OnFailure
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: regcred

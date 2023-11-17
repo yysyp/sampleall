@@ -9,6 +9,7 @@
 #Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
 #kubectl -n simple exec -it liveness-exec -- bash
 #kubectl -n simple exec -it liveness-exec -- /bin/sh
+#kubectl explain pod --recursive | grep -i maxRetries
 apiVersion: v1
 kind: Pod
 metadata:
@@ -30,4 +31,15 @@ spec:
             - /tmp/healthy
         initialDelaySeconds: 5
         periodSeconds: 5
-
+      resources:
+        limits:
+          cpu: 500m
+          memory: 500Mi
+        requests:
+          cpu: 300m
+          memory: 300Mi
+  #restartPolicy: Always
+  #restartPolicy: OnFailure
+  restartPolicy: Never
+  imagePullSecrets:
+    - name: regcred
