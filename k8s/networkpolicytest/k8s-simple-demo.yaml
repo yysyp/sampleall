@@ -8,6 +8,7 @@
 #kubectl -n namespacePlaceHolder describe pod k8s-simple-demo
 #kubectl -n namespacePlaceHolder get pod -w
 #kubectl -n namespacePlaceHolder logs k8s-simple-demo
+#Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
 #kubectl -n namespacePlaceHolder exec -it k8s-simple-demo -- bash
 #kubectl -n namespacePlaceHolder exec -it k8s-simple-demo -- /bin/sh
 #kubectl -n namespacePlaceHolder port-forward k8s-simple-demo 30080:80
