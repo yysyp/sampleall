@@ -1,23 +1,23 @@
 #kubectl apply -f k8s-simple-demo.yaml
 #kubectl delete -f k8s-simple-demo.yaml
-#kubectl delete ns namespacePlaceHolder
-#kubectl create namespace namespacePlaceHolder
-#kubectl apply -f k8s-simple-demo.yaml --namespace=namespacePlaceHolder
+#kubectl delete ns nsabc
+#kubectl create namespace nsabc
+#kubectl apply -f k8s-simple-demo.yaml --namespace=nsabc
 #kubectl delete -f k8s-simple-demo.yaml
-#kubectl delete namespace namespacePlaceHolder
-#kubectl -n namespacePlaceHolder describe pod k8s-simple-demo
-#kubectl -n namespacePlaceHolder get pod -w
-#kubectl -n namespacePlaceHolder logs k8s-simple-demo
-#kubectl -n namespacePlaceHolder exec -it k8s-simple-demo -- bash
-#kubectl -n namespacePlaceHolder exec -it k8s-simple-demo -- /bin/sh
-#kubectl -n namespacePlaceHolder port-forward k8s-simple-demo 30080:80
+#kubectl delete namespace nsabc
+#kubectl -n nsabc describe pod k8s-simple-demo
+#kubectl -n nsabc get pod -w
+#kubectl -n nsabc logs k8s-simple-demo
+#kubectl -n nsabc exec -it k8s-simple-demo -- bash
+#kubectl -n nsabc exec -it k8s-simple-demo -- /bin/sh
+#kubectl -n nsabc port-forward k8s-simple-demo 30080:80
 #kubectl explain pod --recursive | grep -i maxRetries
-#kubectl -n namespacePlaceHolder logs -f $(kubectl -n namespacePlaceHolder get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep simple-demo-web | head -1)
+#kubectl -n nsabc logs -f $(kubectl -n nsabc get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep simple-demo-web | head -1)
 
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: namespacePlaceHolder
+  name: nsabc
 
 ---
 
@@ -25,7 +25,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: simple-demo-web
-  namespace: namespacePlaceHolder
+  namespace: nsabc
 spec:
   replicas: 2
   selector:
@@ -44,13 +44,13 @@ spec:
         fsGroup: 9999
       containers:
         - name: simple-demo-web
-          image: imageNamePlaceHolder:versionPlaceHolder
+          image: simple-demo:v202311171855
           ports:
-            - containerPort: containerPortPlaceHolder
+            - containerPort: 8880
           livenessProbe:
             httpGet:
               path: /healthz
-              port: containerPortPlaceHolder
+              port: 8880
             initialDelaySeconds: 180
             periodSeconds: 60
           volumeMounts:
@@ -79,19 +79,19 @@ spec:
 
 ---
 #Not to create this service you can use this port-forward command instead.
-#kubectl -n namespacePlaceHolder port-forward simple-demo-web-67c84789b9-brbm8 nodePortPlaceHolder:containerPortPlaceHolder
+#kubectl -n nsabc port-forward simple-demo-web-67c84789b9-brbm8 30080:8880
 apiVersion: v1
 kind: Service
 metadata:
   name: simple-demo-service
-  namespace: namespacePlaceHolder
+  namespace: nsabc
   labels:
     app: simple-demo-web
 spec:
   ports:
-    - port: containerPortPlaceHolder # between containers for service call for K8s
-      targetPort: containerPortPlaceHolder # container port
-      nodePort: nodePortPlaceHolder # by default >30000 for external call
+    - port: 8880 # between containers for service call for K8s
+      targetPort: 8880 # container port
+      nodePort: 30080 # by default >30000 for external call
   type: NodePort
   selector:
     app: simple-demo-web
