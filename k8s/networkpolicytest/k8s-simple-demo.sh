@@ -8,7 +8,7 @@ imgName=simple-demo
 ver="v$(date +"%Y%m%d%H%M")"
 ns="nsabc"
 containerPort=8880
-nodePort=30081
+nodePort=30086
 
 echo '-----------------Docker build...-----------------'
 #gcloud auth configure-docker
@@ -22,7 +22,10 @@ sed "s/imageNamePlaceHolder:versionPlaceHolder/$imgName:$ver/g" k8s-simple-demo.
 sed -i "s/namespacePlaceHolder/$ns/g" k8s-simple-demo-output.yaml
 sed -i "s/containerPortPlaceHolder/$containerPort/g" k8s-simple-demo-output.yaml
 sed -i "s/nodePortPlaceHolder/$nodePort/g" k8s-simple-demo-output.yaml
-kubectl delete -f k8s-simple-demo-output.yaml
+
+#kubectl delete -f k8s-simple-demo-output.yaml
+kubectl delete ns $ns
+
 #if [ $? -ne 0 ]; then exit 1; fi
 kubectl apply -f k8s-simple-demo-output.yaml
 if [ $? -ne 0 ]; then exit 1; fi
