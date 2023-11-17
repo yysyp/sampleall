@@ -57,7 +57,8 @@ spec:
       restartPolicy: Always
 
 ---
-
+#Not to create this service you can use this port-forward command instead.
+#kubectl -n app port-forward simple-demo-web-67c84789b9-brbm8 30080:8080
 apiVersion: v1
 kind: Service
 metadata:

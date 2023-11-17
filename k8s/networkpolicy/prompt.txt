@@ -31,3 +31,11 @@ kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 #minikube works
 minikube start --kubernetes-version="v1.16.5" --vm-driver=hyperkit --network-plugin=cni --extra-config=kubelet.network-plugin=cni
 
+---
+installation guide: https://docs.tigera.io/archive/v3.13/getting-started/kubernetes/self-managed-onprem/onpremises
+
+curl https://docs.projectcalico.org/archive/v3.13/manifests/calico.yaml -O
+kubectl apply -f calico.yaml
+
+
+

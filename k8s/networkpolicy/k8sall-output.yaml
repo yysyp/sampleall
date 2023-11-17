@@ -23,7 +23,7 @@ spec:
         fsGroup: 9999
       containers:
         - name: simple-demo-web
-          image: app:v202311160915
+          image: app:v202311171815
           ports:
             - containerPort: 8880
           livenessProbe:
@@ -57,14 +57,15 @@ spec:
       restartPolicy: Always
 
 ---
-
+#Not to create this service you can use this port-forward command instead.
+#kubectl -n appns port-forward simple-demo-web-67c84789b9-brbm8 30081:8880
 apiVersion: v1
 kind: Service
 metadata:
   name: simple-demo-service
 #  namespace: app
   labels:
-    app: simple-demo-web
+    app: simple-demo-web-service
 spec:
   ports:
     - port: 8880 # between containers for service call for K8s
@@ -76,30 +77,30 @@ spec:
 
 ---
 
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: access-curl-pod
-spec:
-  podSelector:
-    matchLabels:
-      app: simple-demo-web
-  policyTypes:
-    - Ingress
-    - Egress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: target-pod
-      ports:
-        - protocol: TCP
-          port: 8880
-  egress:
-    - to:
-        - ipBlock:
-            cidr: 10.0.0.0/24
-      ports:
-        - protocol: TCP
-          port: 32000
-          endPort: 32768
+#apiVersion: networking.k8s.io/v1
+#kind: NetworkPolicy
+#metadata:
+#  name: access-curl-pod
+#spec:
+#  podSelector:
+#    matchLabels:
+#      app: simple-demo-web
+#  policyTypes:
+##    - Ingress
+#    - Egress
+##  ingress:
+##    - from:
+##        - podSelector:
+##            matchLabels:
+##              app: target-pod
+##      ports:
+##        - protocol: TCP
+##          port: 8880
+#  egress:
+#    - to:
+#        - ipBlock:
+#            cidr: 10.0.0.0/24
+#      ports:
+#        - protocol: TCP
+#          port: 32000
+#          endPort: 32768

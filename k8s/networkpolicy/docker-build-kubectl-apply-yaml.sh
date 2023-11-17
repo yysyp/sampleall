@@ -40,4 +40,4 @@ kubectl apply -f k8sall-output.yaml --namespace=$ns
 if [ $? -ne 0 ]; then exit 1; fi
 cd $curDir
 echo "echo kubectl delete ns $ns"
-echo "echo please visit: http://localhost:30080/"
+echo "echo please visit: http://localhost:30081/"

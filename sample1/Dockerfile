@@ -1,4 +1,5 @@
-FROM openjdk:11-jdk-slim
+#FROM openjdk:11-jdk-slim
+FROM openjdk:11
 USER root
 RUN groupadd -g 9000 demo && useradd -u 9000 -g demo demo \
 && mkdir -p /app/conf /app/log
