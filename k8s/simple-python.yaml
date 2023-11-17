@@ -1,0 +1,74 @@
+#Not using the app.py mounted from configmap, but it works
+#kubectl delete ns simple
+#kubectl create namespace simple
+#kubectl apply -f simple-python.yaml --namespace=simple
+#kubectl delete -f simple-python.yaml
+#kubectl delete namespace simple
+#kubectl -n simple describe pod python-webapp
+#kubectl -n simple get pod -w
+#kubectl -n simple logs python-webapp
+#Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
+#kubectl -n simple exec -it python-webapp -- bash
+#kubectl -n simple exec -it python-webapp -- /bin/sh
+#kubectl -n simple port-forward python-webapp 30085:80
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-files
+data:
+  app.py: |
+    from flask import Flask
+
+    app = Flask(__name__)
+
+    @app.route('/')
+    def hello():
+        return "Hello, World!"
+
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=80)
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: python-webapp
+  labels:
+    app: python-webapp
+spec:
+  containers:
+    - name: python-webapp
+      image: python:3.8-slim
+      command: ["python", "-m", "http.server", "80"]
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: python-files
+          mountPath: /app
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 80
+        initialDelaySeconds: 5
+        periodSeconds: 5
+  volumes:
+    - name: python-files
+      configMap:
+        name: python-files
+
+---
+#Not to create this service you can use this port-forward command instead.
+#kubectl -n simple port-forward my-nginx 30082:80
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-webapp-service
+spec:
+  selector:
+    app: python-webapp
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30084
+  type: NodePort
