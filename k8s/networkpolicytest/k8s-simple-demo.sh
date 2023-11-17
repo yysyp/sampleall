@@ -18,16 +18,16 @@ if [ $? -ne 0 ]; then exit 1; fi
 
 echo '-----------------Kubernetes deploy...-----------------'
 #Login if required...
-sed "s/imageNamePlaceHolder:versionPlaceHolder/$imgName:$ver/g" k8s-simple-demo.yaml > k8s-simple-demo-output.yaml
-sed -i "s/namespacePlaceHolder/$ns/g" k8s-simple-demo-output.yaml
-sed -i "s/containerPortPlaceHolder/$containerPort/g" k8s-simple-demo-output.yaml
-sed -i "s/nodePortPlaceHolder/$nodePort/g" k8s-simple-demo-output.yaml
+sed "s/imageNamePlaceHolder:versionPlaceHolder/$imgName:$ver/g" k8s-simple-demo.yaml > k8s-simple-demo.yaml.output
+sed -i "s/namespacePlaceHolder/$ns/g" k8s-simple-demo.yaml.output
+sed -i "s/containerPortPlaceHolder/$containerPort/g" k8s-simple-demo.yaml.output
+sed -i "s/nodePortPlaceHolder/$nodePort/g" k8s-simple-demo.yaml.output
 
-#kubectl delete -f k8s-simple-demo-output.yaml
+#kubectl delete -f k8s-simple-demo.yaml.output
 kubectl delete ns $ns
 
 #if [ $? -ne 0 ]; then exit 1; fi
-kubectl apply -f k8s-simple-demo-output.yaml
+kubectl apply -f k8s-simple-demo.yaml.output
 if [ $? -ne 0 ]; then exit 1; fi
 
 echo "app deployed to -n $ns"
