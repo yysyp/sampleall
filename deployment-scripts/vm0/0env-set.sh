@@ -14,5 +14,4 @@ USERNAME=nexus1
 PASSWD=`cat /c/Users/yp/keys/nexus1_passwd.txt`
 GCP_CREDENTIAL=/c/Users/yp/gcp_credential.json
 
-./0authlogin.sh
 echo "Env set. VM_NAME=$VM_NAME"
