@@ -1,0 +1,32 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp3
+  namespace: nsaaa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp3
+  template:
+    metadata:
+      labels:
+        app: myapp3
+    spec:
+      containers:
+        - name: myapp3
+          image: busybox:1.32
+          command: ["/bin/sh"]
+          args: ["-c", "touch /tmp/healthy; while true; do echo $(date +'%Y%m%d%H%M%S') >> /tmp/healthy; sleep 10; done"]
+          #ports:
+          #  - containerPort: 80
+          #readinessProbe:
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /tmp/healthy
+            initialDelaySeconds: 5
+            periodSeconds: 5
+
