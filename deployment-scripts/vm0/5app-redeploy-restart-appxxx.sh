@@ -2,6 +2,8 @@
 set -o nounset
 set -o errexit
 source 0env-set.sh
+source 0authlogin.sh
+
 ##--------------------------------------------------------------------------------##
 #Usage: find & replace "appxxx" with the actual application name.
 #Replace APP_FILE_NAME name "sample1-1.0.0" to the actual jar file name.

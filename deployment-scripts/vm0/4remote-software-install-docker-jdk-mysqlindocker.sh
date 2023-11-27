@@ -2,6 +2,7 @@
 set -o nounset
 set -o errexit
 source 0env-set.sh
+source 0authlogin.sh
 
 cat > 4remote-software-install-docker-jdk-mysqlindocker-sub.sh <<- 'EOF'
 #! /bin/bash
