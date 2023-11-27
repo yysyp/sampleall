@@ -1,0 +1,18 @@
+codeLanguage: 'java11'
+build:
+  enable: true
+  image:
+    enable: true
+  unitTest:
+    enable: true
+deploy:
+  enable: true
+  name: 'MyApp'
+  imageTag: 'xxx'
+  env:
+    cn:
+      enable: true
+      id: 'CN'
+    us:
+      enable: true
+      id: 'US'

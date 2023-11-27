@@ -14,7 +14,7 @@ pipeline {
 }
 
 ### Or directly use below code without config in the system config?
-library identifier 'pipeline-shared-lib1@master'
+library identifier: 'pipeline-shared-lib1@master',
     retriever: modernSCM([$class: 'GitSCMSource',
                           remote: 'https://gitee.com/yysyp/my-sharedpipeline-lib.git',
                           credentialsId: 'xxx'
