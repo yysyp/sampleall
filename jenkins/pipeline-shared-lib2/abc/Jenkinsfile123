@@ -1,0 +1,12 @@
+@Library('gitee-pipeline-shared-lib2@master') _
+
+script {
+    
+    properties([
+        parameters([
+            choice(choices:['master', 'b1', 'feature/f1'], name: 'theBranch')
+        ])    
+    ])
+}
+
+welcomeJob "${params.theBranch}" 
