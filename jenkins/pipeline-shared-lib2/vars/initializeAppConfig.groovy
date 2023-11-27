@@ -15,6 +15,10 @@ def call(def baseFile = 'pipeline/base.yaml', def versionFile = 'pipeline/versio
     return baseData
 }
 
+def fun1() {
+    println 'This is fun1 from initializeAppConfig'
+}
+
 private def init_info(id) {
     Map theInfo = [
             "aa": "aax",

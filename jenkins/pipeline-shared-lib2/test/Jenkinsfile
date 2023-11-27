@@ -1,10 +1,10 @@
-// library identifier: 'pipeline-shared-lib2@master',
-//     retriever: modernSCM([$class: 'GitSCMSource',
-//                           remote: 'https://gitee.com/yysyp/pipeline-shared-lib2.git',
-//                           credentialsId: 'yysyp@foxmail.com'
-// ])
+library identifier: 'pipeline-shared-lib2@master',
+    retriever: modernSCM([$class: 'GitSCMSource',
+                          remote: 'https://gitee.com/yysyp/pipeline-shared-lib2.git',
+                          credentialsId: 'yysyp@foxmail.com'
+])
 
-@Library('gitee-pipeline-shared-lib2@master') _
+// @Library('gitee-pipeline-shared-lib2@master') _
 
 def config
 
@@ -28,8 +28,13 @@ pipeline {
                 stage('Init Config') {
                     steps {
                         script {
-                            config = initializeAppConfig('test/base.yaml')
+//                             config = initializeAppConfig('test/base.yaml')
 //                             config.deployEnv = config.deploy.env.dev.id
+//                             initializeAppConfig.fun1()
+
+                            cibuild()
+                            cibuild.mvnBuild()
+
                         }
                     }
                 }

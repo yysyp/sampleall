@@ -1,4 +1,4 @@
-@Library('gitee-pipeline-shared-lib2@master') _
+@Library('pipeline-shared-lib1@master') _
 
 script {
     
