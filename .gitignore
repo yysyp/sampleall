@@ -7,6 +7,9 @@ git-ignored-file
 gitIgnoredFile
 upload-folder/
 ignorefolder/
+mypythonvenv
+venv
+.venv
 
 *.tmp
 *.bak
