@@ -18,6 +18,8 @@ Tableau 或其它 BI 工具
 
 How component from React.js to Python:
 https://dash.plotly.com/plugins
+Step by step of create custom component for python dash:
+https://dash.plotly.com/react-for-python-developers
 
 How Are Components Converted From React.js to Python?
 Dash provides a framework that converts React components (written in JavaScript) into Python classes that are compatible with the Dash ecosystem.
