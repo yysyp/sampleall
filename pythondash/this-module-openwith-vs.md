@@ -46,3 +46,7 @@ When a python user does pip install ./pkgdir_my_module (or pip install my-module
 Select python file "main.py", and choose the venv "Python interpreter" (on the bottom of the Terminal window)
 Right click "main.py" file and choose "run python file in terminal"
 and visit: http://127.0.0.1:8050/
+
+### pythoSSL error:
+https://stackoverflow.com/questions/25981703/pip-install-fails-with-connection-error-ssl-certificate-verify-failed-certi
+
