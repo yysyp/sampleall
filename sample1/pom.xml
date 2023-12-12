@@ -128,11 +128,11 @@
             <version>3.1.26</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.beam</groupId>
-            <artifactId>beam-sdks-java-core</artifactId>
-            <version>2.50.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.beam</groupId>-->
+<!--            <artifactId>beam-sdks-java-core</artifactId>-->
+<!--            <version>2.50.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
@@ -142,6 +142,12 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>5.7.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>3.1.1</version>
         </dependency>
 
         <dependency>
