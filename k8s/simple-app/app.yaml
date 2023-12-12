@@ -11,6 +11,7 @@
 #Below kubectl exec needs to use CMD or PowerShell, gitbash desnot work:
 #kubectl -n namespacePlaceHolder exec -it appNamePlaceHolder -- bash
 #kubectl -n namespacePlaceHolder exec -it appNamePlaceHolder -- /bin/sh
+#kubectl -n namespacePlaceHolder exec -it appNamePlaceHolder -- /bin/sh -c "curl http://baidu.com/"
 #kubectl -n namespacePlaceHolder exec -it $(kubectl -n namespacePlaceHolder get pods --field-selector status.phase=Running --no-headers -o custom-columns=":metadata.name" | grep appNamePlaceHolder | head -1) -- /bin/sh
 #kubectl -n namespacePlaceHolder port-forward appNamePlaceHolder 30080:80
 #kubectl explain pod --recursive | grep -i maxRetries
