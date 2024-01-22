@@ -49,7 +49,7 @@ public class Main {
             public void invoke(Map<String, Object> rowData, AnalysisContext analysisContext) {
                 LinkedHashMap<String, Object> dataMap = new LinkedHashMap<>();
                 for (int i = 0, n = rowData.size(); i < n; i++) {
-                    String key = (headMap.get(i)+i).trim();
+                    String key = (headMap.get(i)+"-"+getExcelColumnName(i+1)).trim();
                     Object value = rowData.get(i);
 //                    int keyPrefix = 0;
 //                    String key1 = key;
@@ -90,6 +90,21 @@ public class Main {
             list.add(demoData);
         }
         return list;
+    }
+
+    public static String getExcelColumnName(int col) {
+        StringBuilder columnName = new StringBuilder();
+        while (col > 0) {
+            int rem = col % 26;
+            if (rem == 0) {
+                columnName.append("Z");
+                col = (col / 26) - 1;
+            } else {
+                columnName.append((char)((rem - 1) + 'A'));
+                col = col / 26;
+            }
+        }
+        return columnName.reverse().toString();
     }
 
 
